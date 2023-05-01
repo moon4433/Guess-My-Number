@@ -29,10 +29,8 @@ function displayMessage(message) {
   document.querySelector('.message').textContent = message;
 }
 
-function gameState(color, size, text) {
-  document.querySelector('body').style.backgroundColor = color;
-  document.querySelector('.number').style.width = size;
-  document.querySelector('.number').textContent = text;
+function invalid() {
+  displayMessage('⛔ No number!');
 }
 
 function checkAnswer(guess) {
@@ -56,6 +54,11 @@ function decreaseScore() {
   document.querySelector('.score').textContent = score;
 }
 
+function win() {
+  displayMessage('🎉 Correct Number!');
+  gameState('#60b347', '30rem', secretNumber);
+}
+
 function checkHighscore() {
   if (highscore < score) {
     highscore = score;
@@ -63,22 +66,19 @@ function checkHighscore() {
   }
 }
 
-function invalid() {
-  displayMessage('⛔ No number!');
-}
-
-function win() {
-  displayMessage('🎉 Correct Number!');
-  gameState('#60b347', '30rem', secretNumber);
-}
-
 function reset() {
   score = 20;
-  secretNumber = Math.trunc(Math.floor(Math.random() * (20 - 1 + 1)) + 1);
+  secretNumber = Math.floor(Math.random() * (20 - 1 + 1)) + 1;
 
   displayMessage('❓ Start guessing...');
   document.querySelector('.score').textContent = score;
   document.querySelector('.guess').value = '';
 
   gameState('#222', '15rem', '?');
+}
+
+function gameState(color, size, text) {
+  document.querySelector('body').style.backgroundColor = color;
+  document.querySelector('.number').style.width = size;
+  document.querySelector('.number').textContent = text;
 }
