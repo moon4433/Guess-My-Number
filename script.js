@@ -25,19 +25,29 @@ document.querySelector('.again').addEventListener('click', (event) => {
   reset();
 });
 
+function displayMessage(message) {
+  document.querySelector('.message').textContent = message;
+}
+
+function gameState(color, size, text) {
+  document.querySelector('body').style.backgroundColor = color;
+  document.querySelector('.number').style.width = size;
+  document.querySelector('.number').textContent = text;
+}
+
 function checkAnswer(guess) {
   if (score > 1) {
     // when guess is too high
     if (guess > secretNumber) {
-      document.querySelector('.message').textContent = '📈 Too High!';
+      displayMessage('📈 Too High!');
       // when guess is too low
     } else if (guess < secretNumber) {
-      document.querySelector('.message').textContent = '📉 Too Low!';
+      displayMessage('📉 Too Low!');
     }
     decreaseScore();
   } else {
+    displayMessage('💥 You Lose!');
     decreaseScore();
-    document.querySelector('.message').textContent = '💥 You Lose!';
   }
 }
 
@@ -54,25 +64,21 @@ function checkHighscore() {
 }
 
 function invalid() {
-  document.querySelector('.message').textContent = '⛔ No number!';
+  displayMessage('⛔ No number!');
 }
 
 function win() {
-  document.querySelector('.message').textContent = '🎉 Correct Number!';
-  document.querySelector('body').style.backgroundColor = '#60b347';
-  document.querySelector('.number').style.width = '30rem';
-  document.querySelector('.number').textContent = secretNumber;
+  displayMessage('🎉 Correct Number!');
+  gameState('#60b347', '30rem', secretNumber);
 }
 
 function reset() {
   score = 20;
   secretNumber = Math.trunc(Math.floor(Math.random() * (20 - 1 + 1)) + 1);
 
-  document.querySelector('.message').textContent = '❓ Start guessing...';
+  displayMessage('❓ Start guessing...');
   document.querySelector('.score').textContent = score;
-  document.querySelector('.number').textContent = '?';
   document.querySelector('.guess').value = '';
 
-  document.querySelector('body').style.backgroundColor = '#222';
-  document.querySelector('.number').style.width = '15rem';
+  gameState('#222', '15rem', '?');
 }
